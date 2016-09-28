@@ -1,0 +1,44 @@
+apply plugin: 'com.jfrog.bintray'
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from android.sourceSets.main.java.srcDirs
+}
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+
+Properties prop = new Properties()
+prop.load(new FileInputStream("local.properties"))
+
+bintray {
+    user = prop.getProperty('bintray.user')
+    key = prop.getProperty('bintray.apikey')
+    publish = true
+    configurations = ['archives']
+    pkg {
+        repo = 'maven'
+        name = 'SatispayIntent'
+        userOrg = 'satispay'
+        licenses = ['Apache-2.0']
+        vcsUrl = 'https://github.com/satispay/satispayintent-android-sdk.git'
+        version {
+            name = '1.0.0-Release'
+            // desc = 'Satispay for third-party apps'
+            released  = new Date()
+            vcsTag = '1.0.0'
+        }
+    }
+}

@@ -1,0 +1,34 @@
+apply plugin: 'com.github.dcendents.android-maven'
+
+install {
+    repositories.mavenInstaller {
+        pom.project {
+            name 'SatispayIntent'
+            description 'Satispay for third-party apps'
+            url 'https://github.com/satispay/satispayintent-android-sdk'
+            inceptionYear '2016'
+
+            packaging 'aar'
+            groupId 'com.satispay'
+            artifactId 'satispayintent'
+            version '1.0.0'
+
+            licenses {
+                license {
+                    name 'The Apache Software License, Version 2.0'
+                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    distribution 'repo'
+                }
+            }
+            scm {
+                connection 'https://github.com/satispay/satispayintent-android-sdk.git'
+                url 'https://github.com/satispay/satispayintent-android-sdk'
+            }
+            developers {
+                developer {
+                    name 'Satispay'
+                }
+            }
+        }
+    }
+}
