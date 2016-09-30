@@ -1,5 +1,10 @@
 # Satispay for third-party apps
 
+[![Bintray](https://img.shields.io/bintray/v/satispay/maven/SatispayIntent.svg?maxAge=2592000)](https://bintray.com/satispay/maven/SatispayIntent)
+[![GitHub license](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://raw.githubusercontent.com/satispay/satispayintent-android-sdk/master/LICENSE)
+[![Libraries.io for GitHub](https://img.shields.io/librariesio/github/satispay/satispayintent-android-sdk.svg?maxAge=2592000)]()
+[![Website](https://img.shields.io/website-up-down-green-red/http/satispay.com.svg?maxAge=2592000)](https://www.satispay.com)
+
 Documentation: v16.09.14
 
 Satispay can be integrated in two ways:
