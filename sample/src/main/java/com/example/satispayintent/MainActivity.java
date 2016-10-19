@@ -82,6 +82,15 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        public void openPlayStore(View view, String appPackage) {
+            Intent intent = SatispayIntent.openPlayStore(view.getContext(), appPackage);
+            if (SatispayIntent.isIntentSafe(MainActivity.this, intent)) {
+                appendToLogs(stringColor("--> [Open] " + intent.getDataString(), darkBlueColor));
+                startActivity(intent);
+            } else {
+                snack(view, "Cannot open this URI");
+            }
+        }
 
         // Utils
 

@@ -1,5 +1,9 @@
 apply plugin: 'com.github.dcendents.android-maven'
 
+version = '1.0.1'
+group = 'com.satispay'
+// archivesBaseName = 'satispayintent'
+
 install {
     repositories.mavenInstaller {
         pom.project {
@@ -11,7 +15,7 @@ install {
             packaging 'aar'
             groupId 'com.satispay'
             artifactId 'satispayintent'
-            version '1.0.0'
+            version '1.0.1'
 
             licenses {
                 license {

@@ -35,10 +35,10 @@ bintray {
         licenses = ['Apache-2.0']
         vcsUrl = 'https://github.com/satispay/satispayintent-android-sdk.git'
         version {
-            name = '1.0.0-Release'
+            name = '1.0.1'
             // desc = 'Satispay for third-party apps'
             released  = new Date()
-            vcsTag = '1.0.0'
+            vcsTag = '1.0.1'
         }
     }
 }
