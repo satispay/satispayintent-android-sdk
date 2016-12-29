@@ -65,22 +65,37 @@ public final class SatispayIntent {
      * @param uri
      * @return
      */
+    @NonNull
     public static Intent intentFromUri(@NonNull Uri uri) {
         return new Intent(Intent.ACTION_VIEW).setData(uri);
     }
 
 
     // Satispay scheme generators
-
+    @NonNull
     public static Uri uriForApiProvider(@NonNull String appPackage, @NonNull String path) {
         return Uri.parse(String.format("content://%s.apiprovider/%s", appPackage, path));
     }
 
+    @NonNull
     public static Uri uriForOpenApp(@NonNull String scheme) {
         if (TextUtils.isEmpty(scheme)) throw new IllegalArgumentException("Required: scheme");
         return Uri.parse(String.format("%s:", scheme));
     }
 
+    @NonNull
+    public static Uri uriForOpenPlayStoreWithMarket(@NonNull String appPackage) {
+        if (TextUtils.isEmpty(appPackage)) throw new IllegalArgumentException("Required: appPackage");
+        return Uri.parse(String.format("market://details?id=%s", appPackage));
+    }
+
+    @NonNull
+    public static Uri uriForOpenPlayStoreWithHttps(@NonNull String appPackage) {
+        if (TextUtils.isEmpty(appPackage)) throw new IllegalArgumentException("Required: appPackage");
+        return Uri.parse(String.format("https://play.google.com/store/apps/details?id=%s", appPackage));
+    }
+
+    @NonNull
     public static Uri uriForPayToken(@NonNull String scheme, @NonNull String appId, @NonNull String token) {
         if (TextUtils.isEmpty(scheme)) throw new IllegalArgumentException("Required: scheme");
         if (TextUtils.isEmpty(appId)) throw new IllegalArgumentException("Required: appId");
@@ -90,6 +105,7 @@ public final class SatispayIntent {
         return builder.build();
     }
 
+    @NonNull
     public static Uri uriForPayPhoneAmount(@NonNull String scheme, @NonNull String phoneNumber, @Nullable String amount) {
         if (TextUtils.isEmpty(scheme)) throw new IllegalArgumentException("Required: scheme");
         if (TextUtils.isEmpty(phoneNumber)) throw new IllegalArgumentException("Required: phoneNumber");
@@ -99,6 +115,7 @@ public final class SatispayIntent {
         return builder.build();
     }
 
+    @NonNull
     public static Uri uriForDeveloperPlayground(@NonNull String scheme, @NonNull String version) {
         if (TextUtils.isEmpty(scheme)) throw new IllegalArgumentException("Required: scheme");
         if (TextUtils.isEmpty(version)) throw new IllegalArgumentException("Required: version");
@@ -108,6 +125,7 @@ public final class SatispayIntent {
 
     // Check API availability
 
+    @NonNull
     public static ApiStatus getApiStatus(@NonNull Context context, @NonNull String appPackage, @NonNull Uri uriToCheck) {
         if (TextUtils.isEmpty(appPackage)) throw new IllegalArgumentException("Required: appPackage");
         if (uriToCheck == null) throw new IllegalArgumentException("Required: uri");
@@ -127,14 +145,24 @@ public final class SatispayIntent {
 
     // Satispay intent generators
 
+    @NonNull
     public static Intent openApp(@NonNull String scheme) {
         return intentFromUri(uriForOpenApp(scheme));
     }
 
+    @NonNull
+    public static Intent openPlayStore(@NonNull Context context, @NonNull String appPackage) {
+        Intent intent = intentFromUri(uriForOpenPlayStoreWithMarket(appPackage));
+        if (!isIntentSafe(context, intent)) intent = intentFromUri(uriForOpenPlayStoreWithHttps(appPackage));
+        return intent;
+    }
+
+    @NonNull
     public static Intent payToken(@NonNull String scheme, @NonNull String appId, @NonNull String token) {
         return intentFromUri(uriForPayToken(scheme, appId, token));
     }
 
+    @NonNull
     public static Intent payPhoneAmount(@NonNull String scheme, @NonNull String phoneNumber, @Nullable Long amount) {
         return intentFromUri(uriForPayPhoneAmount(scheme, phoneNumber, amount == null ? null : amount.toString()));
     }

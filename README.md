@@ -24,12 +24,12 @@ Download [JAR](https://bintray.com/satispay/maven/SatispayIntent#files/com/satis
 <dependency>
   <groupId>com.satispay</groupId>
   <artifactId>satispayintent</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
 </dependency>
 ```
 or Gradle:
 ```groovy
-compile 'com.satispay:satispayintent:1.0.0'
+compile 'com.satispay:satispayintent:1.0.1'
 ```
 
 ## Constants
@@ -117,7 +117,8 @@ public class MyActivity extends AppCompatActivity {
             // ...
         } else {
             // Satispay is not available
-            // ...
+            Intent openPlayStoreIntent = SatispayIntent.openPlayStore(this, SatispayIntent.PRODUCTION_APP_PACKAGE);
+            startActivity(openPlayStoreIntent);
         }
     }
     //
@@ -213,7 +214,8 @@ public class MyActivity extends AppCompatActivity {
             startActivity(openAppIntent);
         } else {
             // Satispay is not available
-            // ...
+            Intent openPlayStoreIntent = SatispayIntent.openPlayStore(this, SatispayIntent.PRODUCTION_APP_PACKAGE);
+            startActivity(openPlayStoreIntent);
         }
     }
     //
@@ -356,6 +358,16 @@ public class MyActivity extends AppCompatActivity {
         return isIntentSafe(intent);
     }
     //
+    public void installSatispayIfNeeded() {
+        if (!isSatispayAvailable()) {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + SATISPAY_APP_PACKAGE));
+            if (!isIntentSafe(intent)) {
+                intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + SATISPAY_APP_PACKAGE));
+            }
+            startActivity(intent);
+        }
+    }
+    //
     // ...
     //
 }
@@ -448,7 +460,7 @@ public class MyActivity extends AppCompatActivity {
             startActivity(openAppIntent);
         } else {
             // Satispay is not available
-            // ...
+            installSatispayIfNeeded();
         }
     }
     //
