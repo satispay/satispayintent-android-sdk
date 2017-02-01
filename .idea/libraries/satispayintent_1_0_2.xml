@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="satispayintent-1.0.2">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/sample/build/intermediates/exploded-aar/com.satispay/satispayintent/1.0.2/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/sample/build/intermediates/exploded-aar/com.satispay/satispayintent/1.0.2/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.satispay/satispayintent/1.0.2/d03f81d855ca3532ed282c11fa575ca5566e8432/satispayintent-1.0.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

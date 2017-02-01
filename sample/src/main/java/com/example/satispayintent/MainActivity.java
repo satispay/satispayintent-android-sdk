@@ -32,9 +32,9 @@ public class MainActivity extends AppCompatActivity {
             } catch (Exception e) { return null; }
         }
 
-        public Uri uriForPayTokenOrNull(String scheme, String appId, String token) {
+        public Uri uriForPayChargeIdOrNull(String scheme, String appId, String token) {
             try {
-                return SatispayIntent.uriForPayToken(scheme, appId, token);
+                return SatispayIntent.uriForPayChargeId(scheme, appId, token);
             } catch (Exception e) { return null; }
         }
 
@@ -180,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
         public final ObservableField<String> scheme = new ObservableField<>(SatispayIntent.PRODUCTION_SCHEME);
         public final ObservableField<String> appId = new ObservableField<>("generic");
         public final ObservableField<String> appPackage = new ObservableField<>(SatispayIntent.PRODUCTION_APP_PACKAGE);
-        public final ObservableField<String> token = new ObservableField<>("t123");
+        public final ObservableField<String> chargeId = new ObservableField<>("t123");
         public final ObservableField<String> phone = new ObservableField<>();
         public final ObservableField<String> amount = new ObservableField<>("100");
         public final ObservableField<String> playgroundVersion = new ObservableField<>("1");

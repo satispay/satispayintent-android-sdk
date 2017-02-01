@@ -95,8 +95,13 @@ public final class SatispayIntent {
         return Uri.parse(String.format("https://play.google.com/store/apps/details?id=%s", appPackage));
     }
 
-    @NonNull
+    @Deprecated @NonNull
     public static Uri uriForPayToken(@NonNull String scheme, @NonNull String appId, @NonNull String token) {
+        return uriForPayChargeId(scheme, appId, token);
+    }
+
+    @NonNull
+    public static Uri uriForPayChargeId(@NonNull String scheme, @NonNull String appId, @NonNull String token) {
         if (TextUtils.isEmpty(scheme)) throw new IllegalArgumentException("Required: scheme");
         if (TextUtils.isEmpty(appId)) throw new IllegalArgumentException("Required: appId");
         if (TextUtils.isEmpty(token)) throw new IllegalArgumentException("Required: token");
@@ -157,8 +162,13 @@ public final class SatispayIntent {
         return intent;
     }
 
-    @NonNull
+    @Deprecated @NonNull
     public static Intent payToken(@NonNull String scheme, @NonNull String appId, @NonNull String token) {
+        return payChargeId(scheme, appId, token);
+    }
+
+    @NonNull
+    public static Intent payChargeId(@NonNull String scheme, @NonNull String appId, @NonNull String token) {
         return intentFromUri(uriForPayToken(scheme, appId, token));
     }
 

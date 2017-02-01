@@ -5,7 +5,7 @@
 [![Libraries.io for GitHub](https://img.shields.io/librariesio/github/satispay/satispayintent-android-sdk.svg?maxAge=2592000)]()
 [![Website](https://img.shields.io/website-up-down-green-red/http/satispay.com.svg?maxAge=2592000)](https://www.satispay.com)
 
-Documentation: v16.09.14
+Documentation: v17.02.01
 
 Satispay can be integrated in two ways:
 - Option 1: Use SatispayIntent SDK (recommended)
@@ -14,9 +14,6 @@ Satispay can be integrated in two ways:
 
 # Option 1: Use SatispayIntent SDK
 
-API: v1 (beta)
-
-
 ## Download
 
 Download [JAR](https://bintray.com/satispay/maven/SatispayIntent#files/com/satispay/satispayintent) or grab via Maven:
@@ -24,12 +21,12 @@ Download [JAR](https://bintray.com/satispay/maven/SatispayIntent#files/com/satis
 <dependency>
   <groupId>com.satispay</groupId>
   <artifactId>satispayintent</artifactId>
-  <version>1.0.1</version>
+  <version>1.0.2</version>
 </dependency>
 ```
 or Gradle:
 ```groovy
-compile 'com.satispay:satispayintent:1.0.1'
+compile 'com.satispay:satispayintent:1.0.2'
 ```
 
 ## Constants
@@ -224,44 +221,44 @@ public class MyActivity extends AppCompatActivity {
 }
 ```
 
-## Pay with charge token
+## Pay with charge id
 
-You could start payment intent from your app using charge token.
+You could start payment intent from your app using chargeId.
 
 Steps:
 
-1. Check if you could use `payToken()` on user device (obtain URI and use `getApiStatus()`)
+1. Check if you could use `payChargeId()` on user device (obtain URI and use `getApiStatus()`)
 2. Check response of `getApiStatus()`, if `isValidRequest()` is true you can proceed, else you can check the error code.
-3. Get token [from your backend](#more-info).
-4. Obtain Intent, use `SatispayIntent.payToken(@NonNull String scheme, @NonNull String appId, @NonNull String token)`
+3. Get chargeId [from your backend](#more-info).
+4. Obtain Intent, use `SatispayIntent.payChargeId(@NonNull String scheme, @NonNull String appId, @NonNull String chargeId)`
 5. Call `startActivityForResult()` using the Intent, you should define a constant requestCode parameter.
 6. Override `onActivityResult()` and use `SatispayIntent.ApiStatus.from(resultCode, data)` for parse the results.
 7. Check `apiStatus.isValidRequest()`, if true you can proceed, else you can check the error code.
-8. Now you should check your token with your backend.
+8. Now you should check your chargeId with your backend.
 
 ### Example - How to use it inside an Activity
 ```java
 public class MyActivity extends AppCompatActivity {
-    private static final int REQUEST_PAY_TOKEN = 5471;
-    private String token;
+    private static final int REQUEST_PAY_CHARGE_ID = 5471;
+    private String chargeId;
     //
     // ...
     //
-    public String obtainToken() {
-        // get token from your backend
-        // NOTE: You should persist the token, app may be killed by the system.
+    public String obtainChargeId() {
+        // get charge id from your backend
+        // NOTE: You should persist the charge id, app may be killed by the system.
         // Suggest: override onSaveInstanceState(Bundle outState)
     }
 
-    public void satispayPayToken() {
-        Uri uriToCheck = SatispayIntent.uriForPayToken(SatispayIntent.PRODUCTION_SCHEME, "generic", "TEST_API");
+    public void satispayPayChargeId() {
+        Uri uriToCheck = SatispayIntent.uriForPayChargeId(SatispayIntent.PRODUCTION_SCHEME, "generic", "TEST_API");
         ApiStatus apiStatus = SatispayIntent.getApiStatus(this, SatispayIntent.PRODUCTION_APP_PACKAGE, uriToCheck);
         if (apiStatus.isValidRequest()) {
             String appId = "generic";
-            token = obtainToken();
-            Intent intent = SatispayIntent.payToken(SatispayIntent.PRODUCTION_SCHEME, appId, token);
+            chargeId = obtainChargeId();
+            Intent intent = SatispayIntent.payChargeId(SatispayIntent.PRODUCTION_SCHEME, appId, chargeId);
             if (SatispayIntent.isIntentSafe(this, intent)) {
-                startActivityForResult(intent, REQUEST_PAY_TOKEN);
+                startActivityForResult(intent, REQUEST_PAY_CHARGE_ID);
             } else {
                 // Cannot open this URI
                 // ...
@@ -274,10 +271,10 @@ public class MyActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_PAY_TOKEN) {
+        if (requestCode == REQUEST_PAY_CHARGE_ID) {
             SatispayIntent.ApiStatus apiStatus = SatispayIntent.ApiStatus.from(resultCode, data);
             if (apiStatus.isValidRequest()) {
-                // Now you should check your token with your backend
+                // Now you should check your charge id with your backend
                 // ...
             } else {
                 // There was an error, you should check getCode() for an hint
@@ -469,46 +466,46 @@ public class MyActivity extends AppCompatActivity {
 }
 ```
 
-## Pay with charge token
+## Pay with charge charge id
 
-To start a payment intent from your app, use the charge token obtained from your server.
+To start a payment intent from your app, use the chargeId obtained from your server.
 
-Please note: details on how to obtain a charge-token available at: [https://s3-eu-west-1.amazonaws.com/docs.online.satispay.com/index.html#create-a-charge](https://s3-eu-west-1.amazonaws.com/docs.online.satispay.com/index.html#create-a-charge)
+Please note: details on how to obtain a chargeId available at: [https://s3-eu-west-1.amazonaws.com/docs.online.satispay.com/index.html#create-a-charge](https://s3-eu-west-1.amazonaws.com/docs.online.satispay.com/index.html#create-a-charge)
 
 Steps:
 
-1. Check if you could use `payToken()` on user device (use `isSatispayApiAvailable("satispay://external/generic/charge?token=TEST_API")`)
+1. Check if you could use `payChargeId()` on user device (use `isSatispayApiAvailable("satispay://external/generic/charge?token=TEST_API")`)
 2. Check response of `isSatispayApiAvailable()` is true you can proceed, else you can check the error code.
-3. Get token [from your backend](#more-info).
-4. Build `payTokenIntent` using follow URI: `satispay://external/generic/charge?token=[MyToken]`
+3. Get chargeId [from your backend](#more-info).
+4. Build `payChargeIntent` using follow URI: `satispay://external/generic/charge?token=[ChargeId]`
 5. Call `startActivityForResult()` using the Intent, you should define a constant requestCode parameter.
 6. Override `onActivityResult()`.
-7. Check `requestCode == REQUEST_PAY_TOKEN` and `resultCode == Activity.RESULT_OK`, if true you can proceed, else you can check the error code.
+7. Check `requestCode == REQUEST_PAY_CHARGE_ID` and `resultCode == Activity.RESULT_OK`, if true you can proceed, else you can check the error code.
 8. Now you should check your token with your backend.
 
 ### Example - How to use it inside an Activity
 
 ```java
 public class MyActivity extends AppCompatActivity {
-    private static final int REQUEST_PAY_TOKEN = 5471;
-    private String token;
+    private static final int REQUEST_PAY_CHARGE_ID = 5471;
+    private String chargeId;
     //
     // ...
     //
-    public String obtainToken() {
-        // get token from your backend
-        // NOTE: You should persist the token, app may be killed by the system.
+    public String obtainChargeId() {
+        // get chargeId from your backend
+        // NOTE: You should persist the charge id, app may be killed by the system.
         // Suggest: override onSaveInstanceState(Bundle outState)
     }
 
-    public void satispayPayToken() {
+    public void satispayPayChargeId() {
         if (isSatispayApiAvailable(Uri.parse(SATISPAY_SCHEME + "://external/generic/charge?token=TEST_API"))) {
             // proceed
-            token = obtainToken();
-            Uri uri = Uri.parse(SATISPAY_SCHEME + "://external/generic/charge?token=" + token);
-            Intent payTokenIntent = new Intent(Intent.ACTION_VIEW).setData(uri);
-            if (isIntentSafe(payTokenIntent)) {
-                startActivityForResult(payTokenIntent, REQUEST_PAY_TOKEN);
+            chargeId = obtainChargeId();
+            Uri uri = Uri.parse(SATISPAY_SCHEME + "://external/generic/charge?token=" + chargeId);
+            Intent payChargeIdIntent = new Intent(Intent.ACTION_VIEW).setData(uri);
+            if (isIntentSafe(payChargeIdIntent)) {
+                startActivityForResult(payChargeIdIntent, REQUEST_PAY_CHARGE_ID);
             } else {
                 // Cannot open this URI
                 // ...
@@ -522,9 +519,9 @@ public class MyActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_PAY_TOKEN) {
+        if (requestCode == REQUEST_PAY_CHARGE_ID) {
             if (resultCode == Activity.RESULT_OK) {
-                // Now you should check your token with your backend
+                // Now you should check your charge id with your backend
                 // ...
             } else {
                 // There was an error, you should check code/message for an hint

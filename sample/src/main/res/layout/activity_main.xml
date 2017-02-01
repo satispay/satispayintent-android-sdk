@@ -181,7 +181,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingBottom="8dp"
-                            android:text="Payment request (with token)"
+                            android:text="Payment request (with Charge ID)"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/colorAccent" />
 
@@ -193,9 +193,9 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:ems="10"
-                                android:hint="Token*"
+                                android:hint="Charge ID*"
                                 android:inputType="textNoSuggestions"
-                                android:text="@={fields.token}"
+                                android:text="@={fields.chargeId}"
                                 tools:text="TOKEN" />
                         </android.support.design.widget.TextInputLayout>
 
@@ -203,7 +203,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
-                            android:visibility="@{handlers.uriForPayTokenOrNull(fields.scheme, fields.appId, fields.token) != null ? View.VISIBLE : View.GONE}">
+                            android:visibility="@{handlers.uriForPayChargeIdOrNull(fields.scheme, fields.appId, fields.chargeId) != null ? View.VISIBLE : View.GONE}">
 
 
                             <android.support.design.widget.TextInputLayout
@@ -215,13 +215,13 @@
                                 android:padding="4dp">
 
                                 <EditText
-                                    android:id="@+id/uriForPayToken"
+                                    android:id="@+id/uriForPayChargeId"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:ems="10"
                                     android:hint="URI"
                                     android:inputType="textUri|textMultiLine"
-                                    android:text='@{"" + (handlers.uriForPayTokenOrNull(fields.scheme, fields.appId, fields.token) ?? "Not valid")}'
+                                    android:text='@{"" + (handlers.uriForPayChargeIdOrNull(fields.scheme, fields.appId, fields.chargeId) ?? "Not valid")}'
                                     android:textAppearance="?android:textAppearanceSmall"
                                     tools:text="satispay://..." />
                             </android.support.design.widget.TextInputLayout>
@@ -230,7 +230,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:background="?selectableItemBackgroundBorderless"
-                                android:onClick='@{(myView) -> handlers.getApiStatus(myView, appPackageEditText.getText().toString(), uriForPayToken.getText().toString())}'
+                                android:onClick='@{(myView) -> handlers.getApiStatus(myView, appPackageEditText.getText().toString(), uriForPayChargeId.getText().toString())}'
                                 android:padding="4dp"
                                 android:src="@drawable/ic_live_help_black_24dp" />
 
@@ -238,7 +238,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:background="?selectableItemBackgroundBorderless"
-                                android:onClick='@{(myView) -> handlers.openUri(myView, uriForPayToken.getText().toString())}'
+                                android:onClick='@{(myView) -> handlers.openUri(myView, uriForPayChargeId.getText().toString())}'
                                 android:padding="4dp"
                                 android:src="@drawable/ic_send_black_24dp" />
                         </LinearLayout>
