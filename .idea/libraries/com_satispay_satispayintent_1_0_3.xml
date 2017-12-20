@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="com.satispay:satispayintent-1.0.3">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/satispayintent-1.0.3.aar/4ce5ad0130ff09a9cc9b0f562dae366f/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/satispayintent-1.0.3.aar/4ce5ad0130ff09a9cc9b0f562dae366f/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.satispay/satispayintent/1.0.3/5c41c926d6c4d42350a89cae30c5b26777423e71/satispayintent-1.0.3-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
