@@ -19,6 +19,8 @@ import java.util.Locale;
 public final class SatispayIntent {
     public static final String PRODUCTION_APP_PACKAGE = "com.satispay.customer";
     public static final String PRODUCTION_SCHEME = "satispay";
+    public static final String SANDBOX_APP_PACKAGE = "com.satispay.customer.staging.debug";
+    public static final String SANDBOX_SCHEME = "satispay-stag";
 
     public static final String HOST = "external";
 

@@ -177,9 +177,9 @@ public class MainActivity extends AppCompatActivity {
 
     public static class Fields {
         public final ObservableField<CharSequence> logs = new ObservableField<CharSequence>("API Logs:");
-        public final ObservableField<String> scheme = new ObservableField<>(SatispayIntent.PRODUCTION_SCHEME);
+        public final ObservableField<String> scheme = new ObservableField<>(SatispayIntent.SANDBOX_SCHEME);
         public final ObservableField<String> appId = new ObservableField<>("generic");
-        public final ObservableField<String> appPackage = new ObservableField<>(SatispayIntent.PRODUCTION_APP_PACKAGE);
+        public final ObservableField<String> appPackage = new ObservableField<>(SatispayIntent.SANDBOX_APP_PACKAGE);
         public final ObservableField<String> chargeId = new ObservableField<>("t123");
         public final ObservableField<String> phone = new ObservableField<>();
         public final ObservableField<String> amount = new ObservableField<>("100");

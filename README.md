@@ -21,12 +21,12 @@ Download [JAR](https://bintray.com/satispay/maven/SatispayIntent#files/com/satis
 <dependency>
   <groupId>com.satispay</groupId>
   <artifactId>satispayintent</artifactId>
-  <version>1.0.2</version>
+  <version>1.0.3</version>
 </dependency>
 ```
 or Gradle:
 ```groovy
-compile 'com.satispay:satispayintent:1.0.2'
+compile 'com.satispay:satispayintent:1.0.3'
 ```
 
 ## Constants
@@ -34,10 +34,13 @@ You should use these constants as parameter in SatispayIntent methods. See examp
 
 ```
 SatispayIntent.PRODUCTION_SCHEME
+SatispayIntent.PRODUCTION_APP_PACKAGE
 ```
+or
 
 ```
-SatispayIntent.PRODUCTION_APP_PACKAGE
+SatispayIntent.SANDBOX_SCHEME
+SatispayIntent.SANDBOX_APP_PACKAGE
 ```
 
 ## Generic utility
@@ -78,7 +81,7 @@ public class MyActivity extends AppCompatActivity {
     // ...
     //
     private void myMethod() {
-        Uri uri = Uri.parse(SatispayIntent.PRODUCTION_SCHEME + ":");
+        Uri uri = Uri.parse(SatispayIntent.SANDBOX_SCHEME + ":");
         Intent intent = SatispayIntent.intentFromUri(uri);
         if (SatispayIntent.isIntentSafe(this, intent)) {
             startActivity(intent);
@@ -107,14 +110,14 @@ public class MyActivity extends AppCompatActivity {
     // ...
     //
     private void myMethod() {
-        boolean isSatispayAvailable = SatispayIntent.isSatispayAvailable(this, SatispayIntent.PRODUCTION_SCHEME);
+        boolean isSatispayAvailable = SatispayIntent.isSatispayAvailable(this, SatispayIntent.SANDBOX_SCHEME);
 
         if (isSatispayAvailable) {
             // Satispay is available
             // ...
         } else {
             // Satispay is not available
-            Intent openPlayStoreIntent = SatispayIntent.openPlayStore(this, SatispayIntent.PRODUCTION_APP_PACKAGE);
+            Intent openPlayStoreIntent = SatispayIntent.openPlayStore(this, SatispayIntent.SANDBOX_APP_PACKAGE);
             startActivity(openPlayStoreIntent);
         }
     }
@@ -169,8 +172,8 @@ public class MyActivity extends AppCompatActivity {
     // ...
     //
     private void myMethod() {
-        Uri uriToCheck = SatispayIntent.uriForOpenApp(SatispayIntent.PRODUCTION_SCHEME);
-        ApiStatus apiStatus = SatispayIntent.getApiStatus(this, SatispayIntent.PRODUCTION_APP_PACKAGE, uriToCheck);
+        Uri uriToCheck = SatispayIntent.uriForOpenApp(SatispayIntent.SANDBOX_SCHEME);
+        ApiStatus apiStatus = SatispayIntent.getApiStatus(this, SatispayIntent.SANDBOX_APP_PACKAGE, uriToCheck);
         if (apiStatus.isValidRequest()) {
             // proceed
 
@@ -204,14 +207,14 @@ public class MyActivity extends AppCompatActivity {
     // ...
     //
     public void satispayOpenApp() {
-        boolean isSatispayAvailable = SatispayIntent.isSatispayAvailable(this, SatispayIntent.PRODUCTION_SCHEME);
+        boolean isSatispayAvailable = SatispayIntent.isSatispayAvailable(this, SatispayIntent.SANDBOX_SCHEME);
         
         if (isSatispayAvailable) {
-            Intent openAppIntent = SatispayIntent.openApp(SatispayIntent.PRODUCTION_SCHEME);
+            Intent openAppIntent = SatispayIntent.openApp(SatispayIntent.SANDBOX_SCHEME);
             startActivity(openAppIntent);
         } else {
             // Satispay is not available
-            Intent openPlayStoreIntent = SatispayIntent.openPlayStore(this, SatispayIntent.PRODUCTION_APP_PACKAGE);
+            Intent openPlayStoreIntent = SatispayIntent.openPlayStore(this, SatispayIntent.SANDBOX_APP_PACKAGE);
             startActivity(openPlayStoreIntent);
         }
     }
@@ -251,12 +254,12 @@ public class MyActivity extends AppCompatActivity {
     }
 
     public void satispayPayChargeId() {
-        Uri uriToCheck = SatispayIntent.uriForPayChargeId(SatispayIntent.PRODUCTION_SCHEME, "generic", "TEST_API");
-        ApiStatus apiStatus = SatispayIntent.getApiStatus(this, SatispayIntent.PRODUCTION_APP_PACKAGE, uriToCheck);
+        Uri uriToCheck = SatispayIntent.uriForPayChargeId(SatispayIntent.SANDBOX_SCHEME, "generic", "TEST_API");
+        ApiStatus apiStatus = SatispayIntent.getApiStatus(this, SatispayIntent.SANDBOX_APP_PACKAGE, uriToCheck);
         if (apiStatus.isValidRequest()) {
             String appId = "generic";
             chargeId = obtainChargeId();
-            Intent intent = SatispayIntent.payChargeId(SatispayIntent.PRODUCTION_SCHEME, appId, chargeId);
+            Intent intent = SatispayIntent.payChargeId(SatispayIntent.SANDBOX_SCHEME, appId, chargeId);
             if (SatispayIntent.isIntentSafe(this, intent)) {
                 startActivityForResult(intent, REQUEST_PAY_CHARGE_ID);
             } else {
