@@ -1,13 +1,13 @@
 package com.example.satispayintent;
 
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
-import android.databinding.ObservableField;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ObservableField;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
+import com.google.android.material.snackbar.Snackbar;
+import androidx.appcompat.app.AppCompatActivity;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
@@ -35,6 +35,12 @@ public class MainActivity extends AppCompatActivity {
         public Uri uriForPayChargeIdOrNull(String scheme, String appId, String token) {
             try {
                 return SatispayIntent.uriForPayChargeId(scheme, appId, token);
+            } catch (Exception e) { return null; }
+        }
+
+        public Uri uriForPreAuthorizedPaymentOrNull(String scheme, String token) {
+            try {
+                return SatispayIntent.uriForPreAuthorizedPayment(scheme, token);
             } catch (Exception e) { return null; }
         }
 
@@ -181,6 +187,7 @@ public class MainActivity extends AppCompatActivity {
         public final ObservableField<String> appId = new ObservableField<>("generic");
         public final ObservableField<String> appPackage = new ObservableField<>(SatispayIntent.SANDBOX_APP_PACKAGE);
         public final ObservableField<String> chargeId = new ObservableField<>("t123");
+        public final ObservableField<String> preAuthorizedToken = new ObservableField<>("t123");
         public final ObservableField<String> phone = new ObservableField<>();
         public final ObservableField<String> amount = new ObservableField<>("100");
         public final ObservableField<String> playgroundVersion = new ObservableField<>("1");

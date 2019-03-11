@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.text.TextUtils;
 
 import java.util.Locale;
@@ -123,6 +123,15 @@ public final class SatispayIntent {
     }
 
     @NonNull
+    public static Uri uriForPreAuthorizedPayment(@NonNull String scheme, @NonNull String token) {
+        if (TextUtils.isEmpty(scheme)) throw new IllegalArgumentException("Required: scheme");
+        if (TextUtils.isEmpty(token)) throw new IllegalArgumentException("Required: token");
+        Uri.Builder builder = Uri.parse(String.format("%s://open/preauthorized-payments/payment", scheme)).buildUpon();
+        builder.appendQueryParameter("id", token);
+        return builder.build();
+    }
+
+    @NonNull
     public static Uri uriForDeveloperPlayground(@NonNull String scheme, @NonNull String version) {
         if (TextUtils.isEmpty(scheme)) throw new IllegalArgumentException("Required: scheme");
         if (TextUtils.isEmpty(version)) throw new IllegalArgumentException("Required: version");
@@ -164,14 +173,14 @@ public final class SatispayIntent {
         return intent;
     }
 
-    @Deprecated @NonNull
-    public static Intent payToken(@NonNull String scheme, @NonNull String appId, @NonNull String token) {
-        return payChargeId(scheme, appId, token);
+    @NonNull
+    public static Intent payChargeId(@NonNull String scheme, @NonNull String appId, @NonNull String token) {
+        return intentFromUri(uriForPayChargeId(scheme, appId, token));
     }
 
     @NonNull
-    public static Intent payChargeId(@NonNull String scheme, @NonNull String appId, @NonNull String token) {
-        return intentFromUri(uriForPayToken(scheme, appId, token));
+    public static Intent preAuthorizedPayment(@NonNull String scheme, @NonNull String token) {
+        return intentFromUri(uriForPreAuthorizedPayment(scheme, token));
     }
 
     @NonNull

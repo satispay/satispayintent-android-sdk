@@ -55,7 +55,7 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -67,9 +67,9 @@
                         android:inputType="textNoSuggestions"
                         android:text="@={fields.scheme}"
                         tools:text="satispay-stag" />
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -82,9 +82,9 @@
                         android:inputType="textNoSuggestions"
                         android:text="@={fields.appPackage}"
                         tools:text="com.satispay.consumer" />
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -96,9 +96,9 @@
                         android:inputType="textNoSuggestions"
                         android:text="@={fields.appId}"
                         tools:text="App ID" />
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <android.support.v7.widget.CardView
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
@@ -125,7 +125,7 @@
                             android:gravity="center_vertical"
                             android:visibility="@{handlers.uriForOpenAppOrNull(fields.scheme) != null ? View.VISIBLE : View.GONE}">
 
-                            <android.support.design.widget.TextInputLayout
+                            <com.google.android.material.textfield.TextInputLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -143,7 +143,7 @@
                                     android:text='@{"" + (handlers.uriForOpenAppOrNull(fields.scheme) ?? "Not valid")}'
                                     android:textAppearance="?android:textAppearanceSmall"
                                     tools:text="satispay:" />
-                            </android.support.design.widget.TextInputLayout>
+                            </com.google.android.material.textfield.TextInputLayout>
 
                             <ImageButton
                                 android:layout_width="wrap_content"
@@ -162,9 +162,9 @@
                                 android:src="@drawable/ic_send_black_24dp" />
                         </LinearLayout>
                     </LinearLayout>
-                </android.support.v7.widget.CardView>
+                </androidx.cardview.widget.CardView>
 
-                <android.support.v7.widget.CardView
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
@@ -185,7 +185,7 @@
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/colorAccent" />
 
-                        <android.support.design.widget.TextInputLayout
+                        <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
@@ -197,7 +197,7 @@
                                 android:inputType="textNoSuggestions"
                                 android:text="@={fields.chargeId}"
                                 tools:text="TOKEN" />
-                        </android.support.design.widget.TextInputLayout>
+                        </com.google.android.material.textfield.TextInputLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -206,7 +206,7 @@
                             android:visibility="@{handlers.uriForPayChargeIdOrNull(fields.scheme, fields.appId, fields.chargeId) != null ? View.VISIBLE : View.GONE}">
 
 
-                            <android.support.design.widget.TextInputLayout
+                            <com.google.android.material.textfield.TextInputLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -224,7 +224,7 @@
                                     android:text='@{"" + (handlers.uriForPayChargeIdOrNull(fields.scheme, fields.appId, fields.chargeId) ?? "Not valid")}'
                                     android:textAppearance="?android:textAppearanceSmall"
                                     tools:text="satispay://..." />
-                            </android.support.design.widget.TextInputLayout>
+                            </com.google.android.material.textfield.TextInputLayout>
 
                             <ImageButton
                                 android:layout_width="wrap_content"
@@ -243,9 +243,90 @@
                                 android:src="@drawable/ic_send_black_24dp" />
                         </LinearLayout>
                     </LinearLayout>
-                </android.support.v7.widget.CardView>
+                </androidx.cardview.widget.CardView>
 
-                <android.support.v7.widget.CardView
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:animateLayoutChanges="true"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="8dp"
+                            android:text="Pre Authorized Payment (with Token)"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                            android:textColor="@color/colorAccent" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ems="10"
+                                android:hint="Pre Authorized Token*"
+                                android:inputType="textNoSuggestions"
+                                android:text="@={fields.preAuthorizedToken}"
+                                tools:text="TOKEN" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:visibility="@{handlers.uriForPreAuthorizedPaymentOrNull(fields.scheme, fields.preAuthorizedToken) != null ? View.VISIBLE : View.GONE}">
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="#EEEEEE"
+                                android:elevation="2dp"
+                                android:padding="4dp">
+
+                                <EditText
+                                    android:id="@+id/uriForPreAuthorizedPayment"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:ems="10"
+                                    android:hint="URI"
+                                    android:inputType="textUri|textMultiLine"
+                                    android:text='@{"" + (handlers.uriForPreAuthorizedPaymentOrNull(fields.scheme, fields.preAuthorizedToken) ?? "Not valid")}'
+                                    android:textAppearance="?android:textAppearanceSmall"
+                                    tools:text="satispay://..." />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <ImageButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="?selectableItemBackgroundBorderless"
+                                android:onClick='@{(myView) -> handlers.getApiStatus(myView, appPackageEditText.getText().toString(), uriForPreAuthorizedPayment.getText().toString())}'
+                                android:padding="4dp"
+                                android:src="@drawable/ic_live_help_black_24dp" />
+
+                            <ImageButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="?selectableItemBackgroundBorderless"
+                                android:onClick='@{(myView) -> handlers.openUri(myView, uriForPreAuthorizedPayment.getText().toString())}'
+                                android:padding="4dp"
+                                android:src="@drawable/ic_send_black_24dp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
@@ -268,7 +349,7 @@
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/colorAccent" />
 
-                        <android.support.design.widget.TextInputLayout
+                        <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
@@ -282,9 +363,9 @@
                                 android:inputType="phone"
                                 android:text="@={fields.phone}"
                                 tools:text="+39123456" />
-                        </android.support.design.widget.TextInputLayout>
+                        </com.google.android.material.textfield.TextInputLayout>
 
-                        <android.support.design.widget.TextInputLayout
+                        <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
@@ -297,7 +378,7 @@
                                 android:inputType="number"
                                 android:text="@={fields.amount}"
                                 tools:text="100" />
-                        </android.support.design.widget.TextInputLayout>
+                        </com.google.android.material.textfield.TextInputLayout>
 
 
                         <LinearLayout
@@ -307,7 +388,7 @@
                             android:orientation="horizontal"
                             android:visibility="@{handlers.uriForPayPhoneAmountOrNull(fields.scheme, fields.phone, fields.amount) != null ? View.VISIBLE : View.GONE}">
 
-                            <android.support.design.widget.TextInputLayout
+                            <com.google.android.material.textfield.TextInputLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -326,7 +407,7 @@
                                     android:text='@{"" + (handlers.uriForPayPhoneAmountOrNull(fields.scheme, fields.phone, fields.amount) ?? "Not valid")}'
                                     android:textAppearance="?android:textAppearanceSmall"
                                     tools:text="satispay://..." />
-                            </android.support.design.widget.TextInputLayout>
+                            </com.google.android.material.textfield.TextInputLayout>
 
                             <ImageButton
                                 android:layout_width="wrap_content"
@@ -345,9 +426,9 @@
                                 android:src="@drawable/ic_send_black_24dp" />
                         </LinearLayout>
                     </LinearLayout>
-                </android.support.v7.widget.CardView>
+                </androidx.cardview.widget.CardView>
 
-                <android.support.v7.widget.CardView
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
@@ -368,7 +449,7 @@
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/colorAccent" />
 
-                        <android.support.design.widget.TextInputLayout
+                        <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
@@ -380,7 +461,7 @@
                                 android:inputType="number"
                                 android:text="@={fields.playgroundVersion}"
                                 tools:text="1" />
-                        </android.support.design.widget.TextInputLayout>
+                        </com.google.android.material.textfield.TextInputLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -389,7 +470,7 @@
                             android:orientation="horizontal"
                             android:visibility="@{handlers.uriForDeveloperPlaygroundOrNull(fields.scheme, fields.playgroundVersion) != null ? View.VISIBLE : View.GONE}">
 
-                            <android.support.design.widget.TextInputLayout
+                            <com.google.android.material.textfield.TextInputLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -407,7 +488,7 @@
                                     android:text='@{"" + (handlers.uriForDeveloperPlaygroundOrNull(fields.scheme, fields.playgroundVersion) ?? "Not valid")}'
                                     android:textAppearance="?android:textAppearanceSmall"
                                     tools:text="satispay://..." />
-                            </android.support.design.widget.TextInputLayout>
+                            </com.google.android.material.textfield.TextInputLayout>
 
                             <ImageButton
                                 android:layout_width="wrap_content"
@@ -426,7 +507,7 @@
                                 android:src="@drawable/ic_send_black_24dp" />
                         </LinearLayout>
                     </LinearLayout>
-                </android.support.v7.widget.CardView>
+                </androidx.cardview.widget.CardView>
 
                 <Button
                     android:onClick="@{(myView) -> handlers.openPlayStore(myView, appPackageEditText.getText().toString())}"
