@@ -5,7 +5,7 @@
 [![Libraries.io for GitHub](https://img.shields.io/librariesio/github/satispay/satispayintent-android-sdk.svg?maxAge=2592000)]()
 [![Website](https://img.shields.io/website-up-down-green-red/http/satispay.com.svg?maxAge=2592000)](https://www.satispay.com)
 
-Documentation: v17.12.20
+Documentation: v19.03.08
 
 Satispay can be integrated in two ways:
 - Option 1: Use SatispayIntent SDK (recommended)
@@ -21,12 +21,12 @@ Download [JAR](https://bintray.com/satispay/maven/SatispayIntent#files/com/satis
 <dependency>
   <groupId>com.satispay</groupId>
   <artifactId>satispayintent</artifactId>
-  <version>1.0.3</version>
+  <version>1.0.4</version>
 </dependency>
 ```
 or Gradle:
 ```groovy
-compile 'com.satispay:satispayintent:1.0.3'
+compile 'com.satispay:satispayintent:1.0.4'
 ```
 
 ## Constants
@@ -291,6 +291,72 @@ public class MyActivity extends AppCompatActivity {
 }
 ```
 
+## Request: Pre Authorized Payments
+
+You could start payment intent from your app using chargeId.
+
+Steps:
+
+1. Check if you could use `preAuthorizedPayment()` on user device (obtain URI and use `getApiStatus()`)
+2. Check response of `getApiStatus()`, if `isValidRequest()` is true you can proceed, else you can check the error code.
+3. Get Pre Authorized token [from your backend](#more-info).
+4. Obtain Intent, use `SatispayIntent.preAuthorizedPayment(@NonNull String scheme, @NonNull String token)`
+5. Call `startActivityForResult()` using the Intent, you should define a constant requestCode parameter.
+6. Override `onActivityResult()` and use `SatispayIntent.ApiStatus.from(resultCode, data)` for parse the results.
+7. Check `apiStatus.isValidRequest()`, if true you can proceed, else you can check the error code.
+8. Now you should check your token with your backend.
+
+### Example - How to use it inside an Activity
+```java
+public class MyActivity extends AppCompatActivity {
+    private static final int REQUEST_PRE_AUTHORIZED_PAYMENTS = 5472;
+    private String token;
+    //
+    // ...
+    //
+    public String obtainToken() {
+        // get token from your backend
+        // NOTE: You should persist the token, app may be killed by the system.
+        // Suggest: override onSaveInstanceState(Bundle outState)
+    }
+
+    public void satispayPreAuthorizedPayment() {
+        Uri uriToCheck = SatispayIntent.uriForPreAuthorizedPayment(SatispayIntent.SANDBOX_SCHEME, "TEST_API");
+        ApiStatus apiStatus = SatispayIntent.getApiStatus(this, SatispayIntent.SANDBOX_APP_PACKAGE, uriToCheck);
+        if (apiStatus.isValidRequest()) {
+            token = obtainToken();
+            Intent intent = SatispayIntent.preAuthorizedPayment(SatispayIntent.SANDBOX_SCHEME, token);
+            if (SatispayIntent.isIntentSafe(this, intent)) {
+                startActivityForResult(intent, REQUEST_PRE_AUTHORIZED_PAYMENTS);
+            } else {
+                // Cannot open this URI
+                // ...
+            }
+        } else {
+            // check error
+            getErrorHint(apiStatus.getCode());
+        }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_PRE_AUTHORIZED_PAYMENTS) {
+            SatispayIntent.ApiStatus apiStatus = SatispayIntent.ApiStatus.from(resultCode, data);
+            if (apiStatus.isValidRequest()) {
+                // Now you should check your charge id with your backend
+                // ...
+            } else {
+                // There was an error, you should check getCode() for an hint
+                // ...
+            }
+        }
+    }
+    //
+    // ...
+    //
+}
+```
+
 
 # Option 2: Use Android Intent
 
@@ -539,9 +605,86 @@ public class MyActivity extends AppCompatActivity {
 }
 ```
 
+## Request: Pre Authorized Payments
+
+To start a "Pre Authorized Payment" intent from your app, use the token obtained from your server.
+
+Please note: details on how to obtain a token available at: [https://s3-eu-west-1.amazonaws.com/docs.online.satispay.com/index.html#create-a-charge](https://s3-eu-west-1.amazonaws.com/docs.online.satispay.com/index.html#create-a-charge)
+
+Steps:
+
+1. Check if you could use `preAuthorizedPayment()` on user device (use `isSatispayApiAvailable("satispay://open/preauthorized-payments/payment?id=TEST_API")`)
+2. Check response of `isSatispayApiAvailable()` is true you can proceed, else you can check the error code.
+3. Get token [from your backend](#more-info).
+4. Build `payPreAuthorizedPaymentIntent` using follow URI: `satispay://open/preauthorized-payments/payment?id=[token]`
+5. Call `startActivityForResult()` using the Intent, you should define a constant requestCode parameter.
+6. Override `onActivityResult()`.
+7. Check `requestCode == REQUEST_PRE_AUTHORIZED_PAYMENTS` and `resultCode == Activity.RESULT_OK`, if true you can proceed, else you can check the error code.
+8. Now you should check your token with your backend.
+
+### Example - How to use it inside an Activity
+
+```java
+public class MyActivity extends AppCompatActivity {
+    private static final int REQUEST_PRE_AUTHORIZED_PAYMENTS = 5472;
+    private String token;
+    //
+    // ...
+    //
+    public String obtainToken() {
+        // get token from your backend
+        // NOTE: You should persist the token, app may be killed by the system.
+        // Suggest: override onSaveInstanceState(Bundle outState)
+    }
+
+    public void satispayPreAuthorizedPayment() {
+        if (isSatispayApiAvailable(Uri.parse(SATISPAY_SCHEME + "://open/preauthorized-payments/payment?id=TEST_API"))) {
+            // proceed
+            token = obtainToken();
+            Uri uri = Uri.parse(SATISPAY_SCHEME + "://open/preauthorized-payments/payment?id=" + chargeId);
+            Intent preAuthorizedPaymentIntent = new Intent(Intent.ACTION_VIEW).setData(uri);
+            if (isIntentSafe(preAuthorizedPaymentIntent)) {
+                startActivityForResult(preAuthorizedPaymentIntent, REQUEST_PAY_CHARGE_ID);
+            } else {
+                // Cannot open this URI
+                // ...
+            }
+        } else {
+            // check error
+            // getErrorHint(apiStatus.getCode());
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_PRE_AUTHORIZED_PAYMENTS) {
+            if (resultCode == Activity.RESULT_OK) {
+                // Now you should check your token with your backend
+                // ...
+            } else {
+                // There was an error, you should check code/message for an hint
+                // int code = data.getIntExtra("code", 0);
+                // ...
+            }
+        }
+    }
+    //
+    // ...
+    //
+}
+```
+
 ## More info
 
+### Pay with charge charge id: obtain Charge id
+
 Additional info on how to create and handle charges are available in the Online API documentation at: https://s3-eu-west-1.amazonaws.com/docs.online.satispay.com/index.html
+
+### Pre Authorized Payments: obtain token
+
+Additional info on how to create and handle Pre Authorized Payments are available in the Online API documentation at: https://s3-eu-west-1.amazonaws.com/docs.online.satispay.com/index.html
+
 
 ## License
 
