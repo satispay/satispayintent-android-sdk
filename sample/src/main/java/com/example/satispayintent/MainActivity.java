@@ -38,9 +38,9 @@ public class MainActivity extends AppCompatActivity {
             } catch (Exception e) { return null; }
         }
 
-        public Uri uriForPreAuthorizedPaymentOrNull(String scheme, String token) {
+        public Uri uriForPreAuthorizedPaymentOrNull(String scheme, String appId, String token) {
             try {
-                return SatispayIntent.uriForPreAuthorizedPayment(scheme, token);
+                return SatispayIntent.uriForPreAuthorizedPayment(scheme, appId, token);
             } catch (Exception e) { return null; }
         }
 

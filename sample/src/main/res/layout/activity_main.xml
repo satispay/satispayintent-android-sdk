@@ -284,7 +284,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
-                            android:visibility="@{handlers.uriForPreAuthorizedPaymentOrNull(fields.scheme, fields.preAuthorizedToken) != null ? View.VISIBLE : View.GONE}">
+                            android:visibility="@{handlers.uriForPreAuthorizedPaymentOrNull(fields.scheme, fields.appId, fields.preAuthorizedToken) != null ? View.VISIBLE : View.GONE}">
 
                             <com.google.android.material.textfield.TextInputLayout
                                 android:layout_width="0dp"
@@ -301,7 +301,7 @@
                                     android:ems="10"
                                     android:hint="URI"
                                     android:inputType="textUri|textMultiLine"
-                                    android:text='@{"" + (handlers.uriForPreAuthorizedPaymentOrNull(fields.scheme, fields.preAuthorizedToken) ?? "Not valid")}'
+                                    android:text='@{"" + (handlers.uriForPreAuthorizedPaymentOrNull(fields.scheme, fields.appId, fields.preAuthorizedToken) ?? "Not valid")}'
                                     android:textAppearance="?android:textAppearanceSmall"
                                     tools:text="satispay://..." />
                             </com.google.android.material.textfield.TextInputLayout>

@@ -21,7 +21,7 @@ artifacts {
 }
 
 Properties prop = new Properties()
-prop.load(new FileInputStream("local.properties"))
+prop.load(new FileInputStream(rootDir.absolutePath + "/local.properties"))
 
 bintray {
     user = prop.getProperty('bintray.user')
@@ -35,10 +35,10 @@ bintray {
         licenses = ['Apache-2.0']
         vcsUrl = 'https://github.com/satispay/satispayintent-android-sdk.git'
         version {
-            name = '1.0.4'
+            name = '1.0.5'
             // desc = 'Satispay for third-party apps'
             released  = new Date()
-            vcsTag = '1.0.4'
+            vcsTag = '1.0.5'
         }
     }
 }

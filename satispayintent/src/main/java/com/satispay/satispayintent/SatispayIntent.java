@@ -123,11 +123,12 @@ public final class SatispayIntent {
     }
 
     @NonNull
-    public static Uri uriForPreAuthorizedPayment(@NonNull String scheme, @NonNull String token) {
+    public static Uri uriForPreAuthorizedPayment(@NonNull String scheme, @NonNull String appId, @NonNull String token) {
         if (TextUtils.isEmpty(scheme)) throw new IllegalArgumentException("Required: scheme");
+        if (TextUtils.isEmpty(appId)) throw new IllegalArgumentException("Required: appId");
         if (TextUtils.isEmpty(token)) throw new IllegalArgumentException("Required: token");
-        Uri.Builder builder = Uri.parse(String.format("%s://open/preauthorized-payments/payment", scheme)).buildUpon();
-        builder.appendQueryParameter("id", token);
+        Uri.Builder builder = Uri.parse(String.format("%s://%s/%s/preauthorized-payments/payment", scheme, HOST, appId)).buildUpon();
+        builder.appendQueryParameter("token", token);
         return builder.build();
     }
 
@@ -179,8 +180,8 @@ public final class SatispayIntent {
     }
 
     @NonNull
-    public static Intent preAuthorizedPayment(@NonNull String scheme, @NonNull String token) {
-        return intentFromUri(uriForPreAuthorizedPayment(scheme, token));
+    public static Intent preAuthorizedPayment(@NonNull String scheme, @NonNull String appId, @NonNull String token) {
+        return intentFromUri(uriForPreAuthorizedPayment(scheme, appId, token));
     }
 
     @NonNull
