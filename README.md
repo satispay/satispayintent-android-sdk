@@ -300,7 +300,7 @@ Steps:
 1. Check if you could use `preAuthorizedPayment()` on user device (obtain URI and use `getApiStatus()`)
 2. Check response of `getApiStatus()`, if `isValidRequest()` is true you can proceed, else you can check the error code.
 3. Get Pre Authorized token [from your backend](#more-info).
-4. Obtain Intent, use `SatispayIntent.preAuthorizedPayment(@NonNull String scheme, @NonNull String token)`
+4. Obtain Intent, use `SatispayIntent.preAuthorizedPayment(@NonNull String scheme, @NonNull String appId, @NonNull String token)`
 5. Call `startActivityForResult()` using the Intent, you should define a constant requestCode parameter.
 6. Override `onActivityResult()` and use `SatispayIntent.ApiStatus.from(resultCode, data)` for parse the results.
 7. Check `apiStatus.isValidRequest()`, if true you can proceed, else you can check the error code.
