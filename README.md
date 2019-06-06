@@ -321,11 +321,12 @@ public class MyActivity extends AppCompatActivity {
     }
 
     public void satispayPreAuthorizedPayment() {
-        Uri uriToCheck = SatispayIntent.uriForPreAuthorizedPayment(SatispayIntent.SANDBOX_SCHEME, "TEST_API");
+        Uri uriToCheck = SatispayIntent.uriForPreAuthorizedPayment(SatispayIntent.SANDBOX_SCHEME, "generic", "TEST_API");
         ApiStatus apiStatus = SatispayIntent.getApiStatus(this, SatispayIntent.SANDBOX_APP_PACKAGE, uriToCheck);
         if (apiStatus.isValidRequest()) {
+            String appId = "generic";
             token = obtainToken();
-            Intent intent = SatispayIntent.preAuthorizedPayment(SatispayIntent.SANDBOX_SCHEME, token);
+            Intent intent = SatispayIntent.preAuthorizedPayment(SatispayIntent.SANDBOX_SCHEME, appId, token);
             if (SatispayIntent.isIntentSafe(this, intent)) {
                 startActivityForResult(intent, REQUEST_PRE_AUTHORIZED_PAYMENTS);
             } else {
@@ -613,10 +614,10 @@ Please note: details on how to obtain a token available at: [https://s3-eu-west-
 
 Steps:
 
-1. Check if you could use `preAuthorizedPayment()` on user device (use `isSatispayApiAvailable("satispay://open/preauthorized-payments/payment?id=TEST_API")`)
+1. Check if you could use `preAuthorizedPayment()` on user device (use `isSatispayApiAvailable("satispay://external/preauthorized-payments/payment?id=TEST_API")`)
 2. Check response of `isSatispayApiAvailable()` is true you can proceed, else you can check the error code.
 3. Get token [from your backend](#more-info).
-4. Build `payPreAuthorizedPaymentIntent` using follow URI: `satispay://open/preauthorized-payments/payment?id=[token]`
+4. Build `payPreAuthorizedPaymentIntent` using follow URI: `satispay://external/preauthorized-payments/payment?id=[token]`
 5. Call `startActivityForResult()` using the Intent, you should define a constant requestCode parameter.
 6. Override `onActivityResult()`.
 7. Check `requestCode == REQUEST_PRE_AUTHORIZED_PAYMENTS` and `resultCode == Activity.RESULT_OK`, if true you can proceed, else you can check the error code.
@@ -638,10 +639,10 @@ public class MyActivity extends AppCompatActivity {
     }
 
     public void satispayPreAuthorizedPayment() {
-        if (isSatispayApiAvailable(Uri.parse(SATISPAY_SCHEME + "://open/preauthorized-payments/payment?id=TEST_API"))) {
+        if (isSatispayApiAvailable(Uri.parse(SATISPAY_SCHEME + "://external/preauthorized-payments/payment?id=TEST_API"))) {
             // proceed
             token = obtainToken();
-            Uri uri = Uri.parse(SATISPAY_SCHEME + "://open/preauthorized-payments/payment?id=" + chargeId);
+            Uri uri = Uri.parse(SATISPAY_SCHEME + "://external/preauthorized-payments/payment?id=" + chargeId);
             Intent preAuthorizedPaymentIntent = new Intent(Intent.ACTION_VIEW).setData(uri);
             if (isIntentSafe(preAuthorizedPaymentIntent)) {
                 startActivityForResult(preAuthorizedPaymentIntent, REQUEST_PAY_CHARGE_ID);
