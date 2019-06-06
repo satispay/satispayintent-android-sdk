@@ -5,7 +5,7 @@
 [![Libraries.io for GitHub](https://img.shields.io/librariesio/github/satispay/satispayintent-android-sdk.svg?maxAge=2592000)]()
 [![Website](https://img.shields.io/website-up-down-green-red/http/satispay.com.svg?maxAge=2592000)](https://www.satispay.com)
 
-Documentation: v19.03.08
+Documentation: v19.03.09
 
 Satispay can be integrated in two ways:
 - Option 1: Use SatispayIntent SDK (recommended)
@@ -21,12 +21,12 @@ Download [JAR](https://bintray.com/satispay/maven/SatispayIntent#files/com/satis
 <dependency>
   <groupId>com.satispay</groupId>
   <artifactId>satispayintent</artifactId>
-  <version>1.0.4</version>
+  <version>1.0.5</version>
 </dependency>
 ```
 or Gradle:
 ```groovy
-compile 'com.satispay:satispayintent:1.0.4'
+compile 'com.satispay:satispayintent:1.0.5'
 ```
 
 ## Constants
