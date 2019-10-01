@@ -1,4 +1,4 @@
-# Satispay for third-party apps
+# Satispay for third-party apps ciao
 
 [![Bintray](https://img.shields.io/bintray/v/satispay/maven/SatispayIntent.svg?maxAge=2592000)](https://bintray.com/satispay/maven/SatispayIntent)
 [![GitHub license](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://raw.githubusercontent.com/satispay/satispayintent-android-sdk/master/LICENSE)
