@@ -21,12 +21,12 @@ Download [JAR](https://bintray.com/satispay/maven/SatispayIntent#files/com/satis
 <dependency>
   <groupId>com.satispay</groupId>
   <artifactId>satispayintent</artifactId>
-  <version>1.0.5</version>
+  <version>1.0.6</version>
 </dependency>
 ```
 or Gradle:
 ```groovy
-compile 'com.satispay:satispayintent:1.0.5'
+compile 'com.satispay:satispayintent:1.0.6'
 ```
 
 ## Constants
