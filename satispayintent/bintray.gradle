@@ -1,7 +1,7 @@
 apply plugin: 'com.jfrog.bintray'
 
 task sourcesJar(type: Jar) {
-    classifier = 'sources'
+    archiveClassifier.set('sources')
     from android.sourceSets.main.java.srcDirs
 }
 
@@ -11,7 +11,7 @@ task javadoc(type: Javadoc) {
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
+    archiveClassifier.set('javadoc')
     from javadoc.destinationDir
 }
 
@@ -35,10 +35,10 @@ bintray {
         licenses = ['Apache-2.0']
         vcsUrl = 'https://github.com/satispay/satispayintent-android-sdk.git'
         version {
-            name = '1.0.5'
+            name = '1.0.6'
             // desc = 'Satispay for third-party apps'
             released  = new Date()
-            vcsTag = '1.0.5'
+            vcsTag = '1.0.6'
         }
     }
 }

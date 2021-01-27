@@ -1,4 +1,12 @@
-<manifest package="com.satispay.satispayintent">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.satispay.satispayintent">
+
+    <queries>
+        <package android:name="com.satispay.customer" />
+        <package android:name="com.satispay.customer.staging.debug" />
+        <package android:name="com.satispay.customer.dev.debug" />
+    </queries>
+
     <application/>
 </manifest>
 
